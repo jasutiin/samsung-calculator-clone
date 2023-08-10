@@ -1,16 +1,16 @@
 'use strict';
 
 const addButton = document.querySelector('#add-button');
-addButton.addEventListener('click', (e) => {addToEquation('+')}, false);
+addButton.addEventListener('click', (e) => {addToEquation(addSymbol)}, false);
 
 const minusButton = document.querySelector('#minus-button');
-minusButton.addEventListener('click', (e) => {addToEquation('-')}, false);
+minusButton.addEventListener('click', (e) => {addToEquation(minusSymbol)}, false);
 
 const timesButton = document.querySelector('#times-button');
-timesButton.addEventListener('click', (e) => {addToEquation('*')}, false);
+timesButton.addEventListener('click', (e) => {addToEquation(timesSymbol)}, false);
 
 const divideButton = document.querySelector('#divide-button');
-divideButton.addEventListener('click', (e) => {addToEquation('/')}, false);
+divideButton.addEventListener('click', (e) => {addToEquation(divideSymbol)}, false);
 
 const equalsButton = document.querySelector('#equals-button');
 equalsButton.addEventListener('click', (e) => {solveEquation()}, false);
@@ -21,29 +21,48 @@ for (let i = 0; i < numberButtons.length; i++) {
   numberButtons[i].addEventListener(
     'click',
     (e) => {
-      if (i < 3) 
-        changeNumber(i + 7);
-      else if (i > 2 && i < 6)
-        changeNumber(i + 1);
-      else if (i > 5 && i < 9)
-        changeNumber(i - 5);
-      else
-        changeNumber(0);
+      if (i < 3) {
+        addToEquation(`${i + 7}`);
+      }
+      else if (i > 2 && i < 6) {
+        addToEquation(`${i + 1}`);
+      }
+      else if (i > 5 && i < 9) {
+        addToEquation(`${i - 5}`);
+      }
+      else {
+        addToEquation('0');
+      }
     },
     false
   );
 }
+
+const deleteButton = document.querySelector('#delete-button');
+deleteButton.addEventListener(
+  'click', 
+  (e) => {
+    if (equation.length != 1) {
+      equation = equation.substring(0, equation.length - 1);
+    } else {
+      equation = '0'
+    }
+    console.log(equation);
+
+    document.querySelector('.message').innerHTML = equation;
+  }, 
+  false
+);
 
 // adding functionality to reset button
 const resetButton = document.querySelector('#reset-button');
 resetButton.addEventListener(
   'click', 
   (e) => {
-    main_number = '0';
-    equation.length = 0;
-    hasDecimal = false;
+    equation = '0';
 
-    document.querySelector('.message').innerHTML = main_number;
+    document.querySelector('.message').innerHTML = equation;
+    console.log(equation);
   }, 
   false
 );
@@ -53,13 +72,19 @@ const decimalButton = document.querySelector('#decimal-button');
 decimalButton.addEventListener(
   'click', 
   (e) => {
-    let prev_number = main_number.charAt(main_number.length - 1);
-
-    if (prev_number != '.' && hasDecimal === false) {
-      main_number = main_number + '.';
-      hasDecimal = true;
-      document.querySelector('.message').innerHTML = main_number;
-    }
+    if (checkForDecimal() === false) {
+      if (
+        equation[equation.length - 1] != timesSymbol &&
+        equation[equation.length - 1] != divideSymbol && 
+        equation[equation.length - 1] != addSymbol && 
+        equation[equation.length - 1] != minusSymbol
+        ) {
+            equation += decimalSymbol;
+          } else {
+            equation += `0${'.'}`;
+          }
+      document.querySelector('.message').innerHTML = equation;
+    } 
   }, 
   false
 );
