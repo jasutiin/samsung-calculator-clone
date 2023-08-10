@@ -73,16 +73,11 @@ decimalButton.addEventListener(
   'click', 
   (e) => {
     if (checkForDecimal() === false) {
-      if (
-        equation[equation.length - 1] != timesSymbol &&
-        equation[equation.length - 1] != divideSymbol && 
-        equation[equation.length - 1] != addSymbol && 
-        equation[equation.length - 1] != minusSymbol
-        ) {
-            equation += decimalSymbol;
-          } else {
-            equation += `0${'.'}`;
-          }
+      if (operatorInLastIndex()) {
+        equation += `0${decimalSymbol}`;
+      } else {
+        equation += decimalSymbol;
+      }
       document.querySelector('.message').innerHTML = equation;
     } 
   }, 
