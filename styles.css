@@ -7,10 +7,9 @@
   vertical-align: baseline;
 }
 
-#msg-div {
-  border-style: solid;
+#input-div {
+  height: 100px;
   width: 430px;
-  border: blue;
   margin-bottom: 30px;
   margin-top : 30px;
   margin-right: auto;
@@ -64,7 +63,6 @@ button {
 }
 
 #delete-button {
-  align-content: center;
   margin-left: 317px;
 }
 
