@@ -46,8 +46,10 @@ deleteButton.addEventListener(
   (e) => {
     if (equation.length != 1) {
       equation = equation.substring(0, equation.length - 1);
+      document.getElementById('delete-png').src = 'delete-on.png';
     } else { // equation is 0 by default if you remove everything else
-      equation = '0'
+      equation = '0';
+      document.getElementById('delete-png').src = 'delete-off.png';
     }
     console.log(equation);
 
@@ -62,7 +64,7 @@ resetButton.addEventListener(
   'click', 
   (e) => {
     equation = '0';
-
+    document.getElementById('delete-png').src = 'delete-off.png';
     showEquationOnScreen();
     console.log(equation);
   }, 
@@ -76,11 +78,10 @@ decimalButton.addEventListener(
   (e) => {
     if (checkForDecimal() === false) { // there is no decimal in the current number
       if (operatorInLastIndex()) {
-        equation += `0${decimalSymbol}`; // adding "0." immediately after an operator symbol
+        addToEquation(`0${decimalSymbol}`); // adding "0." immediately after an operator symbol
       } else {
-        equation += decimalSymbol;
+        addToEquation(decimalSymbol);
       }
-      showEquationOnScreen();
     } 
   }, 
   false
@@ -96,6 +97,16 @@ bracketButton.addEventListener(
     } else {
       addToEquation(openingBracket);
     }
+  },
+  false
+);
+
+// adding functionality to bracket button
+const signChangeButton = document.querySelector('#sign-change-button');
+signChangeButton.addEventListener(
+  'click',
+  (e) => {
+
   },
   false
 );

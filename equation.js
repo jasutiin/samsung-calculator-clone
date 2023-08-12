@@ -31,10 +31,15 @@ function operatorInLastIndex() {
 
 // adds item to the end of the equation
 function addToEquation(item) {
+  document.getElementById('delete-png').src = 'delete-on.png';
+
   if (equation === '0') { // default value of equation, can't have empty equation
-    if (item != timesSymbol && item != minusSymbol && item != addSymbol && item != divideSymbol) {
+    if (item === decimalSymbol) {
+      equation += item;
+    } else if (item != timesSymbol && item != minusSymbol && item != addSymbol && item != divideSymbol) {
       equation = item; // replaces 0 with item iff item is not an operator symbol
     } else if (!(item != timesSymbol && item != minusSymbol && item != addSymbol && item != divideSymbol)) {
+      document.getElementById('delete-png').src = 'delete-off.png';
       alert("Invalid format used.");
     }
   } else if (equation.length < maxEquationLength) {
@@ -61,14 +66,12 @@ function addToEquation(item) {
     } else if (!operatorInLastIndex() && item === openingBracket) {
       console.log("yes");
       equation += `${timesSymbol}${openingBracket}`;
-      showEquationOnScreen();
     } else {
       equation += item;
-      showEquationOnScreen();
     }
   }
+  
   console.log(equation);
-
   showEquationOnScreen();
 }
 
@@ -98,19 +101,20 @@ function determineBrackets() {
 
   for (let i = 0; i < equation.length; i++) {
     if (equation[i] === openingBracket) {
-      bracketStack.push('(')
+      bracketStack.push(openingBracket)
     } else if (equation[i] === closingBracket) {
       bracketStack.pop();
     }
   }
 
-  if (bracketStack.pop() === '(') {
+  if (bracketStack.pop() === openingBracket) {
     if (equation[equation.length - 1] === openingBracket) {
-      return '('
+      return openingBracket;
+    } else {
+      return closingBracket;
     }
-    return ')';
   } else {
-    return '(';
+    return openingBracket;
   }
 }
 
@@ -118,7 +122,7 @@ function solveEquation() {
   if (operatorInLastIndex()) { // equation is not complete
         alert("Invalid format used.");
   } else {
-    // equation = `${eval(equation)}`; // nice try you're not allowed to do this
+    equation = `${eval(equation)}`; // nice try you're not allowed to do this
     showEquationOnScreen();
   }
 }
