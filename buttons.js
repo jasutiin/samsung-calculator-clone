@@ -1,5 +1,6 @@
 'use strict';
 
+// adding functionality to operator buttons
 const addButton = document.querySelector('#add-button');
 addButton.addEventListener('click', (e) => {addToEquation(addSymbol)}, false);
 
@@ -21,16 +22,16 @@ for (let i = 0; i < numberButtons.length; i++) {
   numberButtons[i].addEventListener(
     'click',
     (e) => {
-      if (i < 3) {
+      if (i < 3) { // number buttons 7-9
         addToEquation(`${i + 7}`);
       }
-      else if (i > 2 && i < 6) {
+      else if (i > 2 && i < 6) { // number buttons 4-6
         addToEquation(`${i + 1}`);
       }
-      else if (i > 5 && i < 9) {
+      else if (i > 5 && i < 9) { // number buttons 1-3
         addToEquation(`${i - 5}`);
       }
-      else {
+      else { // number button 0
         addToEquation('0');
       }
     },
@@ -38,18 +39,19 @@ for (let i = 0; i < numberButtons.length; i++) {
   );
 }
 
+// adding functionality to delete button
 const deleteButton = document.querySelector('#delete-button');
 deleteButton.addEventListener(
   'click', 
   (e) => {
     if (equation.length != 1) {
       equation = equation.substring(0, equation.length - 1);
-    } else {
+    } else { // equation is 0 by default if you remove everything else
       equation = '0'
     }
     console.log(equation);
 
-    document.querySelector('.message').innerHTML = equation;
+    showEquationOnScreen();
   }, 
   false
 );
@@ -61,7 +63,7 @@ resetButton.addEventListener(
   (e) => {
     equation = '0';
 
-    document.querySelector('.message').innerHTML = equation;
+    showEquationOnScreen();
     console.log(equation);
   }, 
   false
@@ -72,14 +74,28 @@ const decimalButton = document.querySelector('#decimal-button');
 decimalButton.addEventListener(
   'click', 
   (e) => {
-    if (checkForDecimal() === false) {
+    if (checkForDecimal() === false) { // there is no decimal in the current number
       if (operatorInLastIndex()) {
-        equation += `0${decimalSymbol}`;
+        equation += `0${decimalSymbol}`; // adding "0." immediately after an operator symbol
       } else {
         equation += decimalSymbol;
       }
-      document.querySelector('.message').innerHTML = equation;
+      showEquationOnScreen();
     } 
   }, 
+  false
+);
+
+// adding functionality to bracket button
+const bracketButton = document.querySelector('#bracket-button');
+bracketButton.addEventListener(
+  'click',
+  (e) => {
+    if (determineBrackets() === closingBracket) {
+      addToEquation(closingBracket);
+    } else {
+      addToEquation(openingBracket);
+    }
+  },
   false
 );
