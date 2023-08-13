@@ -16,15 +16,29 @@
   margin-left: auto;
 }
 
+#function-div {
+  width: 450px;
+  margin: 10px auto;
+}
+
+.history-div {
+  position: absolute;
+  top: 26%;
+  width: 363px;
+  height: 565px;
+  color: white;
+  border-right: 2px solid #1B1B1B;
+  background-color: black;
+}
+
+.hidden {
+  display: none;
+}
+
 h1 {
   text-align: right;
   color: #B2B2B2;
   font-size: xxx-large;
-}
-
-#function-div {
-  width: 450px;
-  margin: 10px auto;
 }
 
 #clock-png {
@@ -58,7 +72,7 @@ button {
   background-color: black;
 }
 
-#clock-button {
+#history-button {
   margin-left: 42px;
 }
 
